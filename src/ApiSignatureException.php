@@ -1,5 +1,6 @@
 <?php
+namespace mfy;
 
-class ApiSignatureException extends Exception
+class ApiSignatureException extends \Exception
 {
 }
