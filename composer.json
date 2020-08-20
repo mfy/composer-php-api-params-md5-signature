@@ -1,0 +1,15 @@
+{
+  "name": "mfy/api-params-md5-signature",
+  "description": "With this package, we can easily generate & verify signature when dealing with php api development. 此组件可用于 php api 开发工作中的接口参数签名生成与验证。",
+  "type": "library",
+  "license": "GNU General Public License v3.0",
+  "authors": [
+    {
+      "name": "mfy",
+      "email": "mengfanyue@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  }
+}
