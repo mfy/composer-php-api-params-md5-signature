@@ -9,6 +9,11 @@
       "email": "mengfanyue@gmail.com"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "mfy\\": "src/"
+    }
+  },
   "require": {
     "php": ">=7.0"
   }
