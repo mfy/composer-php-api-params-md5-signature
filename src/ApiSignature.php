@@ -33,8 +33,8 @@ class ApiSignature
         }
         ksort($params);
         $outer_params = http_build_query($params);
-        $outer_params[$this->config['sign_key']] = md5($params . $this->secret);
-        return $get_query_array ? $outer_params : $outer_params[$this->config['sign_key']];
+        $params[$this->config['sign_key']] = md5($outer_params . $this->secret);
+        return $get_query_array ? $params : $params[$this->config['sign_key']];
     }
 
     public function generateQueryArray()
