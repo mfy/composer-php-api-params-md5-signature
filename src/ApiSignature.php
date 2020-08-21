@@ -46,7 +46,7 @@ class ApiSignature
     {
         if ((int)$this->config['timeout_limit'] !== 0) {
             if (abs(time() - $this->params[$this->config['timestamp_key']] ?? 0) > $this->config['timeout_limit']) {
-                throw new ApiSignatureException('timeout limit, check server/client time', 10002);
+                throw new ApiSignatureException('timeout (' . $this->config['timeout_limit'] . ' s) limit, check server/client time', 10002);
             }
         }
         if (($this->params[$this->config['sign_key']] ?? '') === $this->generate()) {
