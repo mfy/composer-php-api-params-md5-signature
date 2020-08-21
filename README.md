@@ -7,6 +7,7 @@ composer require mfy/api-params-md5-signature
 ```
 - initialize 初始化
 ```php
+use  mfy\ApiSignature;
 // you can modify the config array if necessary.
 // 必要时可以修改如下配置
 $config = [
@@ -19,8 +20,8 @@ $apiSignature = new ApiSignature(YOUR_SECRET, $_GET, $config);
 - Generate signature 生成签名
 ```php
 <?php
-use ApiSignature;
-use ApiSignatureException;
+use  mfy\ApiSignature;
+use  mfy\ApiSignatureException;
 
 try {
     $params = ['a'=> $a, 'b'=> $b, ...];                                    
