@@ -1,4 +1,5 @@
 <?php
+
 namespace mfy;
 
 class ApiSignature
@@ -23,7 +24,7 @@ class ApiSignature
         $this->config = array_merge($this->config, $config);
     }
 
-    public function generate()
+    public function generate($get_query_array = false)
     {
         $params = array_diff_key($this->params, array_flip([$this->config['sign_key']]));
         if (!isset($params[$this->config['timestamp_key']])) {
@@ -31,8 +32,14 @@ class ApiSignature
             $params[$this->config['timestamp_key']] = time();
         }
         ksort($params);
-        $params = http_build_query($params);
-        return md5($params . $this->secret);
+        $outer_params = http_build_query($params);
+        $outer_params[$this->config['sign_key']] = md5($params . $this->secret);
+        return $get_query_array ? $outer_params : $outer_params[$this->config['sign_key']];
+    }
+
+    public function generateQueryArray()
+    {
+        return $this->generate(true);
     }
 
     public function verify()
