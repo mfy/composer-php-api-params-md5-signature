@@ -49,7 +49,7 @@ class ApiSignature
                 throw new ApiSignatureException('timeout limit, check server/client time', 10002);
             }
         }
-        if ($this->params[$this->config['sign_key']] ?? ($this->params[$this->config['sign_key']] === $this->generate()) ?: false) {
+        if (($this->params[$this->config['sign_key']] ?? '') === $this->generate()) {
             throw new ApiSignatureException('signature verify failed', 10003);
         }
         return true;
