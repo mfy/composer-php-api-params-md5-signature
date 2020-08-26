@@ -7,7 +7,7 @@ class ApiSignature
     private $config = [
         'sign_key' => 'sign',
         'timestamp_key' => 'timestamp',
-        'timeout_limit' => 20,
+        'timeout_limit' => 0,
     ];
 
     private $secret = '';
@@ -27,8 +27,8 @@ class ApiSignature
     public function generate($get_query_array = false)
     {
         $params = array_diff_key($this->params, array_flip([$this->config['sign_key']]));
-        if (!isset($params[$this->config['timestamp_key']])) {
-            // auto add timestamp if not exist
+        if ((int)$this->config['timeout_limit'] !== 0 && !isset($params[$this->config['timestamp_key']])) {
+            // auto add timestamp if not exist && timeout configured
             $params[$this->config['timestamp_key']] = time();
         }
         $params['appSecret'] = $this->secret;
