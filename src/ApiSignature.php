@@ -35,6 +35,7 @@ class ApiSignature
         ksort($params);
         $outer_params = http_build_query($params);
         $params[$this->config['sign_key']] = md5($outer_params);
+        unset($params['appSecret']);
         return $get_query_array ? $params : $params[$this->config['sign_key']];
     }
 
