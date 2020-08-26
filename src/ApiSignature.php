@@ -31,9 +31,10 @@ class ApiSignature
             // auto add timestamp if not exist
             $params[$this->config['timestamp_key']] = time();
         }
+        $params['appSecret'] = $this->secret;
         ksort($params);
         $outer_params = http_build_query($params);
-        $params[$this->config['sign_key']] = md5($outer_params . $this->secret);
+        $params[$this->config['sign_key']] = md5($outer_params);
         return $get_query_array ? $params : $params[$this->config['sign_key']];
     }
 
