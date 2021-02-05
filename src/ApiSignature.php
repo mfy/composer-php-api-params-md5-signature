@@ -6,6 +6,7 @@ class ApiSignature
 {
     private $config = [
         'sign_key' => 'sign',
+        'secret_key' => 'appSecret',
         'timestamp_key' => 'timestamp',
         'timeout_limit' => 0,
     ];
@@ -31,11 +32,11 @@ class ApiSignature
             // auto add timestamp if not exist && timeout configured
             $params[$this->config['timestamp_key']] = time();
         }
-        $params['appSecret'] = $this->secret;
+        $params[$this->config['secret_key']] = $this->secret;
         ksort($params);
         $outer_params = http_build_query($params);
         $params[$this->config['sign_key']] = md5($outer_params);
-        unset($params['appSecret']);
+        unset($params[$this->config['secret_key']]);
         return $get_query_array ? $params : $params[$this->config['sign_key']];
     }
 
@@ -44,7 +45,11 @@ class ApiSignature
         return $this->generate(true);
     }
 
-    public function verify()
+    /**
+     * @return bool
+     * @throws ApiSignatureException
+     */
+    public function verify(): bool
     {
         if ((int)$this->config['timeout_limit'] !== 0) {
             if (abs(time() - $this->params[$this->config['timestamp_key']] ?? 0) > $this->config['timeout_limit']) {
